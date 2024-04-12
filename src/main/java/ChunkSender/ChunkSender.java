@@ -31,8 +31,6 @@ public class ChunkSender extends JavaPlugin {
 		allowedAddresses.add("/127.0.0.1");
 		allowedAddresses.add("/0.0.0.0");
 
-		getServer().getPluginManager().registerEvents(new EventListener(), this);
-
 		HttpServer server;
 		try {
 			server = HttpServer.create(new InetSocketAddress(8000), 0);
@@ -45,7 +43,7 @@ public class ChunkSender extends JavaPlugin {
 		server.setExecutor(null);
 		server.start();
 
-		threadPool = Executors.newFixedThreadPool(32);
+		threadPool = Executors.newFixedThreadPool(12);
 	}
 
 

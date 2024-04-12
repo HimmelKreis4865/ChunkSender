@@ -51,7 +51,6 @@ public class LocateRequestHandler implements HttpHandler {
 
 			ChunkSender.getInstance().getServer().getScheduler().callSyncMethod(ChunkSender.getInstance(), () -> {
 				try {
-					long nanoTime = System.nanoTime();
 					CraftWorld world = (CraftWorld) ChunkSender.getInstance().getServer().getWorld(dimension);
 					if (world == null) {
 						return 0;

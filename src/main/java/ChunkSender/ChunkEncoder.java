@@ -14,7 +14,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.*;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureStart;
-import org.bukkit.craftbukkit.v1_20_R3.CraftChunk;
 import org.bukkit.craftbukkit.v1_20_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_20_R3.block.CraftBiome;
 import org.bukkit.craftbukkit.v1_20_R3.block.data.CraftBlockData;
@@ -28,14 +27,14 @@ public class ChunkEncoder {
 
 	public static byte[] encodeChunk(String dimension, int chunkX, int chunkZ) {
 		CraftWorld world = (CraftWorld) ChunkSender.getInstance().getServer().getWorld(dimension);
-		CraftChunk iChunk = (CraftChunk) world.getChunkAt(chunkX, chunkZ);
-		LevelChunk chunk = (LevelChunk) iChunk.getHandle(ChunkStatus.FULL);
+		assert world != null;
+		LevelChunk chunk = world.getHandle().getChunk(chunkX, chunkZ);
+		BinaryStream finalStream = new BinaryStream();
 		int statesStrategySize = PalettedContainer.Strategy.SECTION_STATES.size();
 		int biomesStrategySize = PalettedContainer.Strategy.SECTION_BIOMES.size();
 		IdMap<BlockState> blockRegistry = Block.BLOCK_STATE_REGISTRY;
 		IdMap<Holder<net.minecraft.world.level.biome.Biome>> biomeRegistry = chunk.r.registryAccess().registryOrThrow(Registries.BIOME).asHolderIdMap();
 
-		BinaryStream finalStream = new BinaryStream();
 
 		// generating the blocks and biomes
 		for (LevelChunkSection section : chunk.getSections()) {
@@ -51,7 +50,6 @@ public class ChunkEncoder {
 				if (section.hasOnlyAir()) {
 					continue;
 				}
-
 
 				// blocks
 				byte bitsPerBlock = stream.readByte();
