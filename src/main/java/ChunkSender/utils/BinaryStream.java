@@ -1,7 +1,7 @@
 package ChunkSender.utils;
 
 import java.nio.charset.StandardCharsets;
-import java.util.*;
+import java.util.Arrays;
 
 /*
  * This code is created by CloudburstMC/Nukkit

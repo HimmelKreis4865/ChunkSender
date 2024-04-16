@@ -10,6 +10,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.biome.Climate;
+import org.bukkit.NamespacedKey;
 import org.bukkit.Registry;
 import org.bukkit.block.Biome;
 import org.bukkit.craftbukkit.v1_20_R3.CraftWorld;
@@ -60,7 +61,7 @@ public class LocateRequestHandler implements HttpHandler {
 					byte[] response;
 					if (isStructure) {
 						// structure selection
-						Structure structure = org.bukkit.Registry.STRUCTURE.match(type);
+						Structure structure = Registry.STRUCTURE.get(Objects.requireNonNull(NamespacedKey.fromString(type)));
 						assert structure != null;
 						List<Holder<net.minecraft.world.level.levelgen.structure.Structure>> holders = new ArrayList<>();
 						holders.add(Holder.direct(CraftStructure.bukkitToMinecraft(structure)));
@@ -78,7 +79,7 @@ public class LocateRequestHandler implements HttpHandler {
 						}
 					} else {
 						// biome selection
-						Biome biome = Registry.BIOME.match(type);
+						Biome biome = Registry.BIOME.get(Objects.requireNonNull(NamespacedKey.fromString(type)));
 						assert biome != null;
 						Set<Holder<net.minecraft.world.level.biome.Biome>> holders = new HashSet<>();
 						holders.add(CraftBiome.bukkitToMinecraftHolder(biome));

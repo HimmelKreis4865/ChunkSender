@@ -3,8 +3,7 @@ package ChunkSender;
 import ChunkSender.request.ChunkRequestHandler;
 import ChunkSender.request.LocateRequestHandler;
 import com.sun.net.httpserver.HttpServer;
-import org.bukkit.Registry;
-import org.bukkit.plugin.java.JavaPlugin;;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -43,7 +42,7 @@ public class ChunkSender extends JavaPlugin {
 		server.setExecutor(null);
 		server.start();
 
-		threadPool = Executors.newFixedThreadPool(12);
+		threadPool = Executors.newFixedThreadPool(2);
 	}
 
 
