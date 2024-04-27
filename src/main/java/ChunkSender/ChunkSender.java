@@ -24,15 +24,15 @@ public class ChunkSender extends JavaPlugin {
 	public void onEnable() {
 		instance = this;
 
-		//this.saveDefaultConfig(); todo
-		//allowedAddresses = getConfig().getStringList(CONFIG_ENTRY_ADDRESSES);
+		this.saveDefaultConfig();
+		allowedAddresses = getConfig().getStringList("allowedAddresses");
 		allowedAddresses.add("/0:0:0:0:0:0:0:1");
 		allowedAddresses.add("/127.0.0.1");
 		allowedAddresses.add("/0.0.0.0");
 
 		HttpServer server;
 		try {
-			server = HttpServer.create(new InetSocketAddress(8000), 0);
+			server = HttpServer.create(new InetSocketAddress(Objects.requireNonNull(getConfig().getString("bind")), getConfig().getInt("port")), 0);
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
